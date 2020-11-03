@@ -1,16 +1,25 @@
+const int ledPin = 13; 
+
 void setup() {
   Serial.begin(9600);
+  pinMode(ledPin,OUTPUT);
 }
+
+
+
 
 void loop() {
   char code=0;
+  int state1=0;
   //  reading code
   if (Serial.available() > 0) {
     code = Serial.read();
     Serial.println("Olvasva");
     }
   switch(code){
-  case '1': Serial.print("1\n"); break;
+  case '1': Serial.print("1\n");
+            digitalWrite(ledPin, !digitalRead(ledPin));
+            break;
 
   case '2': Serial.print("2\n"); break;
 
