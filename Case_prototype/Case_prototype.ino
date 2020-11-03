@@ -17,11 +17,15 @@ void loop() {
     Serial.println("Olvasva");
     }
   switch(code){
-  case '1': Serial.print("1\n");
+  case '1': Serial.print("1\n"); // testcase
             digitalWrite(ledPin, !digitalRead(ledPin));
             break;
 
-  case '2': Serial.print("2\n"); break;
+  case '2': Serial.print("2\n");
+            digitalWrite(ledPin,HIGH);
+            delay(5000);
+            digitalWrite(ledPin,LOW);
+            break;
 
   case '3': Serial.print("3\n"); break;
 
