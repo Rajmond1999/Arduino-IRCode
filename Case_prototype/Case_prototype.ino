@@ -6,11 +6,8 @@ void setup() {
 }
 
 
-
-
 void loop() {
   char code=0;
-  int state1=0;
   //  reading code
   if (Serial.available() > 0) {
     code = Serial.read();
