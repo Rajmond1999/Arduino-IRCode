@@ -8,3 +8,7 @@ Komunikációs protokol : https://www.hivemq.com/mqtt-client-library-encyclopedi
 ESP8266 bekötése:  http://www.teomaragakis.com/hardware/electronics/how-to-connect-an-esp8266-to-an-arduino-uno/
 
 ESP bekötése: https://create.arduino.cc/projecthub/PatelDarshil/how-to-communicate-with-esp8266-via-arduino-uno-f6e92f
+
+ESP Beginner Tutorial: https://create.arduino.cc/projecthub/Niv_the_anonymous/esp8266-beginner-tutorial-project-6414c8
+
+ESP Code Documentation: https://arduino-esp8266.readthedocs.io/en/latest/index.html
