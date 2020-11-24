@@ -14,3 +14,5 @@ ESP8266 bekötése(tanárúr küldte):https://arduino-esp8266.readthedocs.io/en/
 ESP bekötése: https://create.arduino.cc/projecthub/PatelDarshil/how-to-communicate-with-esp8266-via-arduino-uno-f6e92f
 
 TCP socket server: https://circuits4you.com/2018/11/26/esp8266-nodemcu-tcp-socket-server-arduino-example/
+
+                    https://github.com/esp8266/Arduino/issues/307
