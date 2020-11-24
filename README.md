@@ -16,3 +16,5 @@ ESP bekötése: https://create.arduino.cc/projecthub/PatelDarshil/how-to-communi
 TCP socket server: https://circuits4you.com/2018/11/26/esp8266-nodemcu-tcp-socket-server-arduino-example/
 
                     https://github.com/esp8266/Arduino/issues/307
+                    
+UDP comunicaton: https://arduino-esp8266.readthedocs.io/en/latest/esp8266wifi/udp-examples.html
