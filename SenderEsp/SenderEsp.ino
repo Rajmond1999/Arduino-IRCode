@@ -14,7 +14,7 @@ char messagePacket[255];  // buffer for incoming packets
 void setup() {
   
   Serial.begin(9600);
-  ESPserial.begin(9600);
+  ESPserial.begin(115200);
   //Serial.println();
 
   //Serial.printf("Connecting to %s ", ssid);
