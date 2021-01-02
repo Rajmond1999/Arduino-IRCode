@@ -2,7 +2,7 @@
 #include <WiFiUdp.h>
 #include <SoftwareSerial.h>
 
-SoftwareSerial ESPserial(2, 3);
+SoftwareSerial ESPserial(1, 5);
 
 const char* ssid = "Tenda_2731F0";
 const char* password = "12345678";
@@ -15,6 +15,10 @@ void setup() {
   
   Serial.begin(9600);
   ESPserial.begin(115200);
+  pinMode(LED_BUILTIN,OUTPUT);
+   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+   delay(500);
+   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
   //Serial.println();
 
   //Serial.printf("Connecting to %s ", ssid);
@@ -22,18 +26,22 @@ void setup() {
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
-    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
   }
-  //Serial.println(" connected");
+  Serial.println(" connected");
 
   Udp.begin(localUdpPort);
-  //Serial.printf("Now listening at IP %s, UDP port %d\n", WiFi.localIP().toString().c_str(), localUdpPort);
+  Serial.printf("Now listening at IP %s, UDP port %d\n", WiFi.localIP().toString().c_str(), localUdpPort);
 
 }
 
 void loop() {
   if(Serial.available()){
   messagePacket = Serial.read(); 
+  if(messagePacket=='1')
+  {
+     digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+    }
   Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
   Udp.write(messagePacket);
   Udp.endPacket();
