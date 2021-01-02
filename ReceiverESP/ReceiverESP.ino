@@ -49,12 +49,13 @@ void loop() {
       delay(500);
       digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
       Serial.printf("UDP packet contents: %s\n", incomingPacket);
+        if(Serial.available()){
+    Serial.write(incomingPacket);
+  }
+  
     }
   }
   
   
-  if(ESPserial.available()){
-    Serial.write(incomingPacket);
-  }
-  
+
 }
