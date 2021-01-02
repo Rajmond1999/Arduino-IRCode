@@ -16,9 +16,7 @@ void setup() {
   Serial.begin(9600);
   ESPserial.begin(115200);
   pinMode(LED_BUILTIN,OUTPUT);
-   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
-   delay(500);
-   digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+
   //Serial.println();
 
   //Serial.printf("Connecting to %s ", ssid);
@@ -31,7 +29,7 @@ void setup() {
   Serial.println(" connected");
 
   Udp.begin(localUdpPort);
-  Serial.printf("Now listening at IP %s, UDP port %d\n", WiFi.localIP().toString().c_str(), localUdpPort);
+  //Serial.printf("Now listening at IP %s, UDP port %d\n", WiFi.localIP().toString().c_str(), localUdpPort);
 
 }
 
