@@ -9,8 +9,8 @@ const char* password = "12345678";
 
 WiFiUDP Udp;
 unsigned int localUdpPort = 10999;  // local port to listen on
-char incomingPacket[255];  // buffer for incoming packets
-char  replyPacket = '1';
+char incomingPacket[4];  // buffer for incoming packets
+
 
 void setup() {
   
@@ -32,10 +32,6 @@ void setup() {
   Udp.begin(localUdpPort);
   Serial.printf("Now listening at IP %s, UDP port %d\n", WiFi.localIP().toString().c_str(), localUdpPort);
   
-  Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
-  Udp.write(replyPacket);
-  Udp.endPacket();
-  digitalWrite(LED_BUILTIN,LOW);
   }
 
 void loop() {
