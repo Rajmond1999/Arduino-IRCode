@@ -14,7 +14,7 @@ char  replyPacket = '1';
 
 void setup() {
   
-  Serial.begin(115200);
+  Serial.begin(9600);
   ESPserial.begin(115200);
   //Serial.println();
   pinMode(LED_BUILTIN, OUTPUT);
