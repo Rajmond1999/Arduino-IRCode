@@ -4,8 +4,8 @@
 
 SoftwareSerial ESPserial(2, 3);
 
-const char* ssid = "WiFi Nev";
-const char* password = "WiFi kod";
+const char* ssid = "Tenda_2731F0";
+const char* password = "12345678";
 
 WiFiUDP Udp;
 unsigned int localUdpPort = 10999;  // local port to listen on
@@ -23,34 +23,40 @@ void setup() {
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
-    //Serial.print(".");
+    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+    Serial.print(".");
   }
-  //Serial.println(" connected");
-
+  digitalWrite(LED_BUILTIN,HIGH);
+  Serial.println(" connected");
+  digitalWrite(LED_BUILTIN,LOW);
   Udp.begin(localUdpPort);
-  //Serial.printf("Now listening at IP %s, UDP port %d\n", WiFi.localIP().toString().c_str(), localUdpPort);
-
+  Serial.printf("Now listening at IP %s, UDP port %d\n", WiFi.localIP().toString().c_str(), localUdpPort);
+  
   Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
   Udp.write(replyPacket);
   Udp.endPacket();
+  digitalWrite(LED_BUILTIN,LOW);
   }
 
 void loop() {
   
   int packetSize = Udp.parsePacket();
+
   
   if (packetSize)
   {
-    //Serial.printf("Received %d bytes from %s, port %d\n", packetSize, Udp.remoteIP().toString().c_str(), Udp.remotePort());
-    int len = Udp.read(incomingPacket, 255);
+    Serial.printf("Received %d bytes from %s, port %d\n", packetSize, Udp.remoteIP().toString().c_str(), Udp.remotePort());
+    int len = Udp.read(incomingPacket, 4);
     if (len > 0)
     {
       incomingPacket[len] = 0;
+      delay(500);
       digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+      Serial.printf("UDP packet contents: %s\n", incomingPacket);
     }
   }
   
-  //Serial.printf("UDP packet contents: %s\n", incomingPacket);
+  
   if(ESPserial.available()){
     Serial.write(incomingPacket);
   }
