@@ -14,6 +14,7 @@ void loop() {
   command = Serial.read();
   switch(command){
     case 1: digitalWrite(Out_1, !digitalRead(Out_1));
+            digitalWrite(ledPin, !digitalRead(ledPin));
             break;
     case 2: digitalWrite(Out_2, !digitalRead(Out_2));
             break;
