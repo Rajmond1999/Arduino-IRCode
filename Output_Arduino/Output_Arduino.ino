@@ -13,12 +13,12 @@ void loop() {
   
   command = Serial.read();
   switch(command){
-    case 1: digitalWrite(Out_1, !digitalRead(Out_1));
+    case '1': digitalWrite(Out_1, !digitalRead(Out_1));
             digitalWrite(ledPin, !digitalRead(ledPin));
             break;
-    case 2: digitalWrite(Out_2, !digitalRead(Out_2));
+    case '2': digitalWrite(Out_2, !digitalRead(Out_2));
             break;
-    case 3: digitalWrite(Out_3, !digitalRead(Out_3));
+    case '3': digitalWrite(Out_3, !digitalRead(Out_3));
             break;
   }
 
