@@ -17,8 +17,7 @@ void setup() {
   ESPserial.begin(115200);
   pinMode(LED_BUILTIN,OUTPUT);
 
-  //Serial.println();
-
+ 
   //Serial.printf("Connecting to %s ", ssid);
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED)
