@@ -1,12 +1,9 @@
 #include <IRremote.h>
-const int ledPin = 13;
 int RECV_PIN = 11;
 
-int flag=0;
 
 IRrecv irrecv(RECV_PIN);
 decode_results results;
-int result1,result2,result3;
 
 void setup()
 {
