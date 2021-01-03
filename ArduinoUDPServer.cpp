@@ -3,79 +3,81 @@
 #include <stdio.h>
 #include "winsock2.h"
 #include "ws2tcpip.h"
-// Link with ws2_32.lib
 #pragma comment(lib, "Ws2_32.lib")
 
 
-void main(){
+int main()
+{
 	WSADATA wsaData;
 	SOCKET ListenSocket;
 	sockaddr_in ServAddr;
-	sockaddr_in RecvAddr;
-	int Port = 13 , Port2=10999;
-	char SendBuf[1024];
-	char FAR RecBuf[1024];
-	int BufLen = 1024;
-	int fromlen, len;
+	sockaddr_in RecvAddrCommander;
+	int Port = 10999;
+	char SendBuf[4];
+	char FAR RecBuf[4];
+	int BufLen = 4;
+	int fromlen, CommandLen = -1, NumberOfClients = 1;
 	SYSTEMTIME st, lt;
 
-	//---------------------------------------------
 	// Initialize Winsock
 	WSAStartup(MAKEWORD(2, 2), &wsaData);
-	//---------------------------------------------
 	// Create a socket for sending data
 
 	ListenSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	//---------------------------------------------
 
 	ServAddr.sin_family = AF_INET;
-	ServAddr.sin_port = htons(Port2);
+	ServAddr.sin_port = htons(Port);
+	//ServAddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	inet_pton(AF_INET, "127.0.0.1", &ServAddr.sin_addr);
-	
 
 	if (bind(ListenSocket,
 		(SOCKADDR*)&ServAddr,
 		sizeof(ServAddr)) == SOCKET_ERROR) {
 		printf("bind() failed.\n");
 		closesocket(ListenSocket);
-		return;
+		return 0;
 	}
 
+	//------------------------
+	//initializing clients
 
-
-
-	//---------------------------------------------
+	sockaddr_in RecvAddr[1024];
+	for (int i = 0; i < NumberOfClients; ++i)
+	{
+		while (CommandLen < 0) {
+			fromlen = sizeof(RecvAddr[i]);
+			CommandLen = recvfrom(ListenSocket, RecBuf, BufLen, 0, (SOCKADDR*)&(RecvAddr[i]), &fromlen);
+			printf("%i %c", CommandLen, (char)(*RecBuf));
+		}
+	}
 
 	printf("Receiving datagrams...\n");
-	fromlen = sizeof(RecvAddr);
-	int i = recvfrom(ListenSocket, RecBuf, BufLen, 0, (SOCKADDR*)&RecvAddr, &fromlen);
-	printf("%i\n", i);
-	if (i < 0) {
-		int f = WSAGetLastError();
-		f = f;
+
+	int code;
+
+	while (9)
+	{
+		while (CommandLen < 0)
+		{
+			CommandLen = recvfrom(ListenSocket, RecBuf, BufLen, 0, (SOCKADDR*)&RecvAddrCommander, &fromlen);
+		}
+		memcpy(&code, RecBuf, 4);
+		printf("%i %i\n", code, CommandLen);
+
+		for (int i = 0; i < NumberOfClients; ++i)
+		{
+			CommandLen = sendto(ListenSocket, SendBuf, CommandLen, 0, (SOCKADDR*)&(RecvAddr[i]), sizeof(RecvAddr[i]));
+			printf("%i %i\n", code, CommandLen);
+		}
+		CommandLen = -1;
 	}
 
 
-	//-----------------------------------------------
-	
-	SendBuf[0] = 'a';
-	SendBuf[1] = 'l';
-	SendBuf[2] = 'm';
-	SendBuf[3] = 'a';
-	SendBuf[4] = '\0';
-	GetLocalTime(&lt);
-
-	len = strlen(SendBuf)+1;
-
-	printf("Sending a datagram to the receiver...\n");
-	printf("%i\n", sendto(ListenSocket, SendBuf, len, 0, (SOCKADDR*)&RecvAddr, sizeof(RecvAddr)));
-
-
-	printf("Finished sending. Closing socket.\n");
-	closesocket(ListenSocket);
 	//---------------------------------------------
 	// Clean up and quit.
+	closesocket(ListenSocket);
 	printf("Exiting.\n");
 	WSACleanup();
-	return;
+	return 0;
 }
+
